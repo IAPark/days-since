@@ -1,0 +1,57 @@
+<html>
+  <head>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <style>
+      #thing-broken, #days-since {
+        position: fixed;
+        text-align: center;
+        width: 100%;
+        font-family: 'Roboto', sans-serif;
+      }
+      #days-since {
+        top: 45%;
+        transform: translateY(-50%);
+        font-size: 40vh;
+      }
+
+      #thing-broken {
+        bottom: 10%;
+        font-size: 40px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="days-since"></h4>
+
+    <h3 id="thing-broken"></h1>
+    <script>
+      function getParameterByName(name) {
+          url = window.location.href;
+          name = name.replace(/[\[\]]/g, '\\$&');
+          var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+              results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      }
+
+      function update() {
+        var date_broken = new Date(getParameterByName("date"))
+
+        let difference = new Date() - date_broken
+
+        let days = Math.floor(difference/(60*60*24*1000))
+
+        document.getElementById('days-since').innerText = days
+
+        document.getElementById('thing-broken').innerText = "Day"+(days>1?"s":"")+" Since The Last "+getParameterByName("thing")
+      }
+
+      setInterval(update, 1000)
+      update()
+    </script>
+  </body>
+</html>
